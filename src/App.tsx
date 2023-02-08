@@ -4,10 +4,7 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <h1>Digital Environments</h1>
-      </div>
-      <div className="section">
-        <p>Exploring digital environments.</p>
+        <h1>Digital Environments.</h1>
       </div>
       <div className="underline"></div>
     </div>
