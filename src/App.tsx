@@ -9,7 +9,7 @@ function App() {
       <div className="section">
         <p>Exploring digital environments.</p>
       </div>
-      <div className="footer"></div>
+      <div className="underline"></div>
     </div>
   );
 }
