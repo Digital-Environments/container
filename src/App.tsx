@@ -4,7 +4,9 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <h1>Digital Environments.</h1>
+        <h1>
+          Digital <span style={{ color: "#87ceeb" }}>Environments</span>.
+        </h1>
       </div>
       <div className="underline"></div>
     </div>
