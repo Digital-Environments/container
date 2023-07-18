@@ -5,10 +5,10 @@ function App() {
 
   return (
     <div className="App">
-        <body>
+        <>
           <Header />
          <VideoPlayer />
-        </body>  
+        </>  
     </div>
   );
 }
