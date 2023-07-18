@@ -6,8 +6,9 @@ const Header = () => {
     return (
         <div className="header">
             <div className="header-label" style={{color: "white"}}>
-                Digital Environments.
+                Digital <span style={{color: "#ADD8E6"}}>Environments</span>.
             </div>
+            <div className="underline"></div>
         </div>
     )
 }
