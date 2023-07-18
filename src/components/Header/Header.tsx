@@ -1,5 +1,6 @@
 import React from "react";
 import './header.css'
+import ButtonComponent from "../Button/ButtonComponent";
 
 const Header = () => {
 
@@ -9,6 +10,7 @@ const Header = () => {
                 Digital <span style={{color: "#ADD8E6"}}>Environments</span>.
             </div>
             <div className="underline"></div>
+            <ButtonComponent />
         </div>
     )
 }
