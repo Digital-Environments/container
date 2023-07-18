@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Barrio&family=Poppins&display=swap');
+
+.header {
+min-width: 400px;
+border: 2px solid red;
+padding: 8px;
+}
+
+
+.header-label {
+    font-size: 3.5rem;
+    color: #F5F5F5;
+    font-family: 'Barrio', cursive;
+    text-align: center;
+}
