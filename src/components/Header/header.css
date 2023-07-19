@@ -2,6 +2,7 @@
 
 .header {
 min-width: 400px;
+height: 100vh;
 padding: 2px;
 display: flex;
 flex-direction: column;
@@ -11,7 +12,7 @@ align-items: center;
 
 
 .header-label {
-    font-size: 3.5rem;
+    font-size: 4.5rem;
     color: #F5F5F5;
     font-family: 'Barrio', cursive;
     text-align: center;
@@ -21,13 +22,6 @@ align-items: center;
 .underline {
     background-color: #ffd700;
     height: 4px;
-    width: 250px;
+    width: 350px;
     margin-bottom: 32px;
-}
-
-.header-content {
-    min-width: 600px;
-    padding: 2px;
-    border-radius: 10px;
-    background-color: #696969;
 }
