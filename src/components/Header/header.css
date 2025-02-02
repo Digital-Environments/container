@@ -2,7 +2,7 @@
 
 .header {
 min-width: 400px;
-height: 100vh;
+
 padding: 2px;
 display: flex;
 flex-direction: column;

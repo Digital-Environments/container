@@ -5,14 +5,14 @@ import ButtonComponent from "../Button/ButtonComponent";
 const Header = () => {
 
     return (
-        <div className="header">
-            <div className="header-label" style={{color: "white"}}>
-                Digital <span style={{color: "#ADD8E6"}}>Environments</span>.
-            </div>
-            <div className="underline"></div>
-            <ButtonComponent />
+      <div className="header  overflow-hidden">
+        <div className="header-label text-lg text-white">
+          Digital <span className="text-[#ADD8E6]">Environments</span>.
         </div>
-    )
+        <div className="underline"></div>
+        <ButtonComponent />
+      </div>
+    );
 }
 
 export default Header;

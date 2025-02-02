@@ -16,7 +16,7 @@ const VideoPlayer = () => {
 
 return (
 <Section>
-<video autoPlay muted loop className='video'>
+<video autoPlay muted className='video'>
 <source src={video} type="video/mp4" />
 </video>
 </Section>

@@ -26,12 +26,12 @@ function App() {
 }, [])
 
   return (
-    <Section>
+    <Section className=" w-full min-w-[1500px] overflow-hidden">
       <Header />
       <VideoPlayer />  
-      <AboutUs />
     </Section>
   );
 }
+      {/* <AboutUs /> */}
 
 export default App;
