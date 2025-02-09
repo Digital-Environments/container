@@ -15,11 +15,11 @@ const Section = styled.div`
 const VideoPlayer = () => {
 
 return (
-<Section>
-<video autoPlay muted className='video'>
-<source src={video} type="video/mp4" />
-</video>
-</Section>
-)
+  <Section>
+    <video autoPlay muted playsInline className="video">
+      <source src={video} type="video/mp4" />
+    </video>
+  </Section>
+);
 }
 export default VideoPlayer;

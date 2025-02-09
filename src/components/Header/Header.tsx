@@ -5,11 +5,11 @@ import ButtonComponent from "../Button/ButtonComponent";
 const Header = () => {
 
     return (
-      <div className="header  overflow-hidden">
-        <div className="header-label text-lg text-white">
+      <div className="header  lg:min-w-[400px] w-full">
+        <div className="header-label text-[48px] lg:text-[72px] text-white">
           Digital <span className="text-[#ADD8E6]">Environments</span>.
         </div>
-        <div className="underline"></div>
+        <div className="underline w-1/2 lg:min-w-[350px]"></div>
         <ButtonComponent />
       </div>
     );

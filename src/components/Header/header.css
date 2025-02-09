@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Barrio&family=Poppins&display=swap');
 
 .header {
-min-width: 400px;
 
+border: 1px solid red;
 padding: 2px;
 display: flex;
 flex-direction: column;
@@ -12,7 +12,7 @@ align-items: center;
 
 
 .header-label {
-    font-size: 4.5rem;
+    
     color: #F5F5F5;
     font-family: 'Barrio', cursive;
     text-align: center;

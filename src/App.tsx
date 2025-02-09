@@ -10,7 +10,7 @@ const Section = styled.div`
 display: flex;
 justify-content: center;
 align-content: center;
-flex-wrap: wrap;
+
 flex-direction: column;
 `
 
@@ -26,10 +26,10 @@ function App() {
 }, [])
 
   return (
-    <Section className=" w-full min-w-[1500px] overflow-hidden">
+    <div className="border border-blue-500 w-[95vw] max-w-1500 overflow-hidden flex justify-center items-center min-h-[100%] h-[100vh]">
       <Header />
       <VideoPlayer />  
-    </Section>
+    </div>
   );
 }
       {/* <AboutUs /> */}
