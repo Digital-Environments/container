@@ -26,7 +26,7 @@ function App() {
 }, [])
 
   return (
-    <div className="border border-blue-500 w-[95vw] max-w-1500 overflow-hidden flex justify-center items-center min-h-[100%] h-[100vh]">
+    <div className="w-[100vw] max-w-1500 overflow-hidden flex justify-center items-center  h-[100vh]">
       <Header />
       <VideoPlayer />  
     </div>

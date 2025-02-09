@@ -21,7 +21,7 @@ body {
   display: flex;
   min-width: 100%;
   min-height: 100%;
-
+  overflow: hidden !important;
   color: #f5f5f5;
   justify-content: center;
   align-content: center;

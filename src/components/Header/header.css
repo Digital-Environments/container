@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Barrio&family=Poppins&display=swap');
 
 .header {
-
-border: 1px solid red;
 padding: 2px;
 display: flex;
 flex-direction: column;
@@ -22,6 +20,6 @@ align-items: center;
 .underline {
     background-color: #ffd700;
     height: 4px;
-    width: 350px;
+
     margin-bottom: 32px;
 }
