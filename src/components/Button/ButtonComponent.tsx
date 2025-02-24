@@ -1,20 +1,31 @@
-import React, {useEffect, useState} from "react";
-import { Button } from '@mantine/core';
+import React, { useState } from "react";
+import { Button } from "@mantine/core";
 
-
-const ButtonComponent = () => {
-
-    const [buttonText, setButtonText] = useState("Enter");
-
-    const handleClick = () => {
-        buttonText === "Enter" ? setButtonText("Jokes, feature coming soon!") : setButtonText("Enter")
+interface ButtonComponentProps {
+  onEnterClick: () => void;
 }
 
-    return (
-        <Button onClick={handleClick} size="md" variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
-            {buttonText}                         
-        </Button>
-    )
-}
+const ButtonComponent: React.FC<ButtonComponentProps> = ({ onEnterClick }) => {
+  const [buttonText, setButtonText] = useState("Enter");
+
+  const handleClick = () => {
+    if (buttonText === "Enter") {
+      onEnterClick();
+    } else {
+      setButtonText("Enter");
+    }
+  };
+
+  return (
+    <Button
+      onClick={handleClick}
+      size="md"
+      variant="gradient"
+      gradient={{ from: "indigo", to: "cyan" }}
+    >
+      {buttonText}
+    </Button>
+  );
+};
 
 export default ButtonComponent;
