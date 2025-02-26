@@ -2,23 +2,29 @@ import React, { useState } from "react";
 import { Button } from "@mantine/core";
 
 interface ButtonComponentProps {
-  onEnterClick: () => void;
+  onEnterClick?: () => void;
+  onClick?: () => void;
+  buttonText?: string
 }
 
-const ButtonComponent: React.FC<ButtonComponentProps> = ({ onEnterClick }) => {
-  const [buttonText, setButtonText] = useState("Enter");
+const ButtonComponent: React.FC<ButtonComponentProps> = ({
+  onEnterClick,
+  onClick,
+  buttonText,
+}) => {
+  
 
-  const handleClick = () => {
-    if (buttonText === "Enter") {
-      onEnterClick();
-    } else {
-      setButtonText("Enter");
-    }
-  };
+  // const handleClick = () => {
+  //   if (buttonText === "Enter") {
+  //     onEnterClick();
+  //   } else {
+  //     setButtonText("Enter");
+  //   }
+  // };
 
   return (
     <Button
-      onClick={handleClick}
+      onClick={onClick}
       size="md"
       variant="gradient"
       gradient={{ from: "indigo", to: "cyan" }}

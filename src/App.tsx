@@ -38,7 +38,7 @@ function App() {
         <Morphogenesis />
       ) : (
         <>
-          <Header onEnterClick={handleEnterClick} />
+          <Header onClick={handleEnterClick} />
           <VideoPlayer />
         </>
       )}
