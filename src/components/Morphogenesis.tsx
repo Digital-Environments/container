@@ -1,19 +1,47 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import ButtonComponent from "./Button/ButtonComponent";
+
+type SpeedMode = "original" | "slow" | "medium" | "fast";
+
+const getGrowthProbabilityRange = (mode: SpeedMode): [number, number] => {
+  switch (mode) {
+    case "slow":
+      return [0.005, 0.02];
+    case "medium":
+      return [0.02, 0.08];
+    case "fast":
+      return [0.1, 0.3];
+    case "original":
+    default:
+      return [0.05, 0.2];
+  }
+};
+
+const customRandom = (min: number, max: number): number => {
+  return Math.random() * (max - min) + min;
+};
 
 const ClusterGrowthAnimation: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [speedMode, setSpeedMode] = useState<SpeedMode>("original");
+  // Use a ref so the animation loop always sees the latest speed mode.
+  const speedModeRef = useRef<SpeedMode>(speedMode);
+
+  const handleSpeedChange = (mode: SpeedMode): void => {
+    setSpeedMode(mode);
+    speedModeRef.current = mode;
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let activeCells = 0;
     let iterations = 0;
-    const cellSize = 3; // Size of each cell in pixels
-    const gap = 3; // Size of the gap between cells in pixels
+    const cellSize = 3;
+    const gap = 3;
     const totalOffset = cellSize + gap;
 
     // Grid dimensions based on canvas size and cell size
@@ -23,28 +51,27 @@ const ClusterGrowthAnimation: React.FC = () => {
 
     // Create an empty grid to start with
     let tempGrid: number[][] = createEmptyGrid();
-    let growthProbability: number = customRandom(0.05, 0.2);
 
     // Array of dark colors for the clusters
     const darkColors: string[] = [
-      "#9D0000", // Dark Red
-      "#C70039", // Deep Pink
-      "#800080", // Purple
-      "#4C3378", // Dark Purple (bluish)
-      "#003080", // Navy Blue (more vivid)
-      "#007BFF", // Material Blue (darker, vivid)
-      "#388E3C", // Dark Green (vivid)
-      "#00695C", // Dark Teal
-      "#663399", // Dark Amethyst
-      "#8B0000", // Maroon (more vivid)
-      "#A020F0", // Deep Purple (more intense)
-      "#B32830", // Dark Red (brownish)
-      "#BF360C", // Dark Orange
-      "#C2C255", // Dark Lime (more muted)
-      "#FF9933", // Dark Orange (reddish)
+      "#9D0000",
+      "#C70039",
+      "#800080",
+      "#4C3378",
+      "#003080",
+      "#007BFF",
+      "#388E3C",
+      "#00695C",
+      "#663399",
+      "#8B0000",
+      "#A020F0",
+      "#B32830",
+      "#BF360C",
+      "#C2C255",
+      "#FF9933",
     ];
 
-    // Select a random color for the current iteration
+   
     let color: string = getRandomColor(darkColors);
 
     function createEmptyGrid(): number[][] {
@@ -83,15 +110,21 @@ const ClusterGrowthAnimation: React.FC = () => {
     }
 
     function updateGrid(): void {
+      // Recalculate the current growth probability using the current speed mode.
+      const [minProb, maxProb] = getGrowthProbabilityRange(
+        speedModeRef.current
+      );
+      const currentGrowthProbability = customRandom(minProb, maxProb);
+
       const newCells: [number, number][] = [];
       const updatedGrid: number[][] = createEmptyGrid();
 
-      // Iterate through each cell in the grid (avoiding the boundaries)
+      // Iterate through grid (avoiding boundaries)
       for (let i = 1; i < tempGrid.length - 1; i++) {
         for (let j = 1; j < tempGrid[0].length - 1; j++) {
           if (tempGrid[i][j] === 0) {
             const neighbors = countNeighbors(i, j);
-            if (neighbors > 0 && growthProbability > Math.random()) {
+            if (neighbors > 0 && currentGrowthProbability > Math.random()) {
               newCells.push([i, j]);
               updatedGrid[i][j] = 1;
             }
@@ -117,9 +150,11 @@ const ClusterGrowthAnimation: React.FC = () => {
     function reset(): void {
       activeCells = 0;
       tempGrid = createEmptyGrid();
-      growthProbability = customRandom(0.05, 0.2);
-
-      // Alternate between colored and white clusters
+      // Recalculate the growth probability on reset based on the current speed mode.
+      const [minProb, maxProb] = getGrowthProbabilityRange(
+        speedModeRef.current
+      );
+      // (new value not stored as a variable since updateGrid will recalc it)
       if (iterations % 2 !== 0) {
         color = getRandomColor(darkColors);
       } else {
@@ -133,42 +168,34 @@ const ClusterGrowthAnimation: React.FC = () => {
       return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    function customRandom(min: number, max: number): number {
-      return Math.random() * (max - min) + min;
-    }
-
     let animationFrameId: number;
+    let lastUpdate = performance.now();
+    const updateInterval = 100; // fixed update interval in ms
 
     function growClusters(): void {
-      updateGrid();
-      // Reset if the entire grid is filled
+      const now = performance.now();
+      if (now - lastUpdate >= updateInterval) {
+        updateGrid();
+        lastUpdate = now;
+      }
       if (activeCells >= totalCells) {
         reset();
       }
       animationFrameId = requestAnimationFrame(growClusters);
     }
 
-    // Set the initial cluster in the center of the grid
+    // Start the animation with an initial cluster.
     setInitialCluster(Math.ceil(gridWidth / 2), Math.ceil(gridHeight / 2), 2);
-    // Start the animation
     growClusters();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
-
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        width: "100vw",
-        margin: 0,
-        backgroundColor: "#000",
-      }}
+
+      className="flex flex-col items-center justify-center h-screen w-screen bg-black m-0 gap-14 px-4"
     >
       <canvas
         ref={canvasRef}
@@ -176,6 +203,25 @@ const ClusterGrowthAnimation: React.FC = () => {
         height="420"
         style={{ border: "1px solid black", backgroundColor: "#fff" }}
       />
+      <div className="flex flex-col justify-center items-center gap-3 lg:flex-row w-full mt-[20px]">
+        <ButtonComponent
+          onClick={() => handleSpeedChange("original")}
+          buttonText="Original"
+          
+        />
+        <ButtonComponent
+          onClick={() => handleSpeedChange("slow")}
+          buttonText="Slow"
+        />
+        <ButtonComponent
+          onClick={() => handleSpeedChange("medium")}
+          buttonText="Medium"
+        />
+        <ButtonComponent
+          onClick={() => handleSpeedChange("fast")}
+          buttonText="Fast"
+        />
+      </div>
     </div>
   );
 };
