@@ -203,7 +203,7 @@ const ClusterGrowthAnimation: React.FC = () => {
         height="420"
         style={{ border: "1px solid black", backgroundColor: "#fff" }}
       />
-      <div className="flex flex-col justify-center items-center gap-3 lg:flex-row w-full mt-[20px]">
+      <div className="flex  justify-center items-center gap-3  w-full mt-[20px]">
         <ButtonComponent
           onClick={() => handleSpeedChange("original")}
           buttonText="Original"
