@@ -33,7 +33,7 @@ function App() {
   };
 
   return (
-    <div className="w-[100vw] max-w-1500 overflow-hidden flex justify-center items-center  h-[100vh]">
+    <div className="w-[100vw] max-w-1500 overflow-hidden flex justify-center items-center  h-[100dvh]">
       {showMorphogenesis ? (
         <Morphogenesis />
       ) : (
