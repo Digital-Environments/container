@@ -17,7 +17,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
     <Button
       onClick={onClick}
       size="md"
-      className="!w-[95px]"
+      className="!w-[100px] lg:!w-[95px]"
       variant="gradient"
       gradient={{ from: "indigo", to: "cyan" }}
     >
