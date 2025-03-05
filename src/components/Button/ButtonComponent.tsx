@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@mantine/core";
 
 interface ButtonComponentProps {
@@ -8,24 +8,16 @@ interface ButtonComponentProps {
 }
 
 const ButtonComponent: React.FC<ButtonComponentProps> = ({
-  onEnterClick,
   onClick,
   buttonText,
 }) => {
   
 
-  // const handleClick = () => {
-  //   if (buttonText === "Enter") {
-  //     onEnterClick();
-  //   } else {
-  //     setButtonText("Enter");
-  //   }
-  // };
-
   return (
     <Button
       onClick={onClick}
       size="md"
+      className="!w-[95px]"
       variant="gradient"
       gradient={{ from: "indigo", to: "cyan" }}
     >
