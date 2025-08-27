@@ -18,14 +18,6 @@ flex-direction: column;
 
 function App() {
 
-//   useEffect(() => {
-//     fetch("https://api.chucknorris.io/jokes/random")
-//     .then((response) => response.json())
-//     .then((joke) => {
-//       console.log(joke.value);
-//     });
-// }, [])
-
   const [showMorphogenesis, setShowMorphogenesis] = useState(false);
 
   const handleEnterClick = () => {
@@ -45,6 +37,5 @@ function App() {
     </div>
   );
 }
-      {/* <AboutUs /> */}
 
 export default App;
