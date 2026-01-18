@@ -1,6 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import ButtonComponent from "./Button/ButtonComponent";
 
+interface MorphogenesisProps {
+  onBack?: () => void;
+}
+
 type SpeedMode = "original" | "slow" | "medium" | "fast";
 
 const getGrowthProbabilityRange = (mode: SpeedMode): [number, number] => {
@@ -21,10 +25,9 @@ const customRandom = (min: number, max: number): number => {
   return Math.random() * (max - min) + min;
 };
 
-const ClusterGrowthAnimation: React.FC = () => {
+const ClusterGrowthAnimation: React.FC<MorphogenesisProps> = ({ onBack }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [speedMode, setSpeedMode] = useState<SpeedMode>("original");
-  // Use a ref so the animation loop always sees the latest speed mode.
   const speedModeRef = useRef<SpeedMode>(speedMode);
 
   const handleSpeedChange = (mode: SpeedMode): void => {
@@ -44,15 +47,14 @@ const ClusterGrowthAnimation: React.FC = () => {
     const gap = 3;
     const totalOffset = cellSize + gap;
 
-    // Grid dimensions based on canvas size and cell size
     const gridWidth: number = Math.floor(canvas.width / totalOffset);
     const gridHeight: number = Math.floor(canvas.height / totalOffset);
     const totalCells: number = (gridWidth - 1) * (gridHeight - 1);
 
-    // Create an empty grid to start with
+   
     let tempGrid: number[][] = createEmptyGrid();
 
-    // Array of dark colors for the clusters
+  
     const darkColors: string[] = [
       "#9D0000",
       "#C70039",
@@ -170,7 +172,7 @@ const ClusterGrowthAnimation: React.FC = () => {
 
     let animationFrameId: number;
     let lastUpdate = performance.now();
-    const updateInterval = 100; // fixed update interval in ms
+    const updateInterval = 100;
 
     function growClusters(): void {
       const now = performance.now();
@@ -184,7 +186,6 @@ const ClusterGrowthAnimation: React.FC = () => {
       animationFrameId = requestAnimationFrame(growClusters);
     }
 
-    // Start the animation with an initial cluster.
     setInitialCluster(Math.ceil(gridWidth / 2), Math.ceil(gridHeight / 2), 2);
     growClusters();
 
@@ -207,7 +208,7 @@ const ClusterGrowthAnimation: React.FC = () => {
         <ButtonComponent
           onClick={() => handleSpeedChange("original")}
           buttonText="Original"
-          
+
         />
         <ButtonComponent
           onClick={() => handleSpeedChange("slow")}
@@ -222,6 +223,14 @@ const ClusterGrowthAnimation: React.FC = () => {
           buttonText="Fast"
         />
       </div>
+      {onBack && (
+        <button
+          onClick={onBack}
+          className="absolute top-6 left-6 text-white/50 hover:text-white text-sm uppercase tracking-widest transition-colors bg-transparent border-none cursor-pointer"
+        >
+          ← Back
+        </button>
+      )}
     </div>
   );
 };
