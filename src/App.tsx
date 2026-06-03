@@ -5,7 +5,7 @@ import Morphogenesis from "./components/Morphogenesis";
 import Dispersion from "./components/Dispersion";
 import SelectionScreen from "./components/SelectionScreen";
 
-type Screen = "landing" | "selection" | "morphogenesis" | "dispersion";
+type Screen = "landing" | "selection" | "morphogenesis" | "dispersion" | "agua";
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>("landing");
@@ -14,7 +14,7 @@ function App() {
     setCurrentScreen("selection");
   };
 
-  const handleSelectArtwork = (artwork: "morphogenesis" | "dispersion") => {
+  const handleSelectArtwork = (artwork: "morphogenesis" | "dispersion" | "agua") => {
     setCurrentScreen(artwork);
   };
 
@@ -23,7 +23,7 @@ function App() {
   };
 
   return (
-    <div className="w-[100vw] max-w-1500 overflow-hidden flex justify-center items-center h-[100dvh]">
+    <div className="w-[100vw]  overflow-hidden flex justify-center items-center h-[100dvh] rounded-2xl">
       {currentScreen === "landing" && (
         <>
           <Header onClick={handleEnterClick} />
@@ -39,6 +39,10 @@ function App() {
       {currentScreen === "dispersion" && (
         <Dispersion onBack={handleBack} />
       )}
+      {currentScreen === "agua" && (
+        <Dispersion onBack={handleBack} />
+      )}
+
     </div>
   );
 }
