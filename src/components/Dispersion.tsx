@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 type MotionMode = 'soft' | 'balanced' | 'intense'
-type PrimaryColour = 'red' | 'green' | 'blue'
+type PrimaryColour = 'red' | 'green' | 'blue' | 'yellow'
 
 type MotionPreset = {
   trailRadius: number
@@ -66,6 +66,11 @@ const primaryColourOptions: ColourOption[] = [
     label: 'Blue',
     value: 'blue',
     color: '#0000FF',
+  },
+  {
+    label: 'Yellow',
+    value: 'yellow',
+    color: '#FFD700',
   },
 ]
 
@@ -272,7 +277,7 @@ export default function PointerDispersionThreeOnly({
 
         gl_Position = vec4(p, 1.0);
 
-        float baseSize = 0.75 + envelope * 1.2;
+        float baseSize = 0.75 + envelope * 1.6;
         gl_PointSize = baseSize * 2.0;
       }
     `
@@ -289,8 +294,10 @@ export default function PointerDispersionThreeOnly({
       void main(){
         vec2 uv = gl_PointCoord - 0.5;
         float r = length(uv);
-        float soft = smoothstep(0.5, 0.0, r);
-        float alpha = soft * vAlpha;
+        float core = smoothstep(0.42, 0.0, r);
+        float edge = smoothstep(0.5, 0.44, r);
+        float sharp = core * edge;
+        float alpha = sharp * min(vAlpha * 1.8, 1.0);
         if (alpha <= 0.001) discard;
 
         int colorIndex = int(floor(clamp(vMix, 0.0, 0.999) * float(uColorCount)));
