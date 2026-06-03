@@ -1,10 +1,34 @@
 import React from "react";
-import ButtonComponent from "./Button/ButtonComponent";
+import ArtworkCard, { Artwork, InternalScreen } from "./ArtworkCard";
 import "./SelectionScreen.css";
 
 interface SelectionScreenProps {
-  onSelect: (artwork: "morphogenesis" | "dispersion") => void;
+  onSelect: (artwork: InternalScreen) => void;
 }
+
+
+const artworks: Artwork[] = [
+  {
+    kind: "internal",
+    title: "Morphogenesis",
+    description:
+      "An exploration of organic growth patterns through cellular automata. Watch and interact as clusters grow and evolve on the canvas.",
+    screen: "morphogenesis",
+  },
+  {
+    kind: "internal",
+    title: "Dispersion",
+    description:
+      "An attempt to model the phenomenon of dispersion. Using a mouse controlled animation. (Best experienced on Desktop)",
+    screen: "dispersion",
+  },
+  {
+    kind: "external",
+    title: "Agua",
+    description: "Agua is an immersive audio-visual experience that translates the fluid and dynamic nature of water into a digital canvas.",
+    url: "https://aguasofresh.vercel.app/",
+  },
+];
 
 const SelectionScreen: React.FC<SelectionScreenProps> = ({ onSelect }) => {
   return (
@@ -17,31 +41,13 @@ const SelectionScreen: React.FC<SelectionScreenProps> = ({ onSelect }) => {
       </div>
 
       <div className="cards-container">
-        <div className="artwork-card" onClick={() => onSelect("morphogenesis")}>
-          <h2 className="card-title">Morphogenesis</h2>
-          <p className="card-description">
-            An exploration of organic growth patterns through cellular automata. Watch and interact as clusters grow and evolve on the canvas.
-          </p>
-          <div className="card-button">
-            <ButtonComponent
-              onClick={() => onSelect("morphogenesis")}
-              buttonText="Open"
-            />
-          </div>
-        </div>
-
-        <div className="artwork-card" onClick={() => onSelect("dispersion")}>
-          <h2 className="card-title">Dispersion</h2>
-          <p className="card-description">
-           An attempt to model the phenomenon of dispersion. Using a mouse controlled animation. (Best experienced on Desktop)
-          </p>
-          <div className="card-button">
-            <ButtonComponent
-              onClick={() => onSelect("dispersion")}
-              buttonText="Open"
-            />
-          </div>
-        </div>
+        {artworks.map((artwork) => (
+          <ArtworkCard
+            key={artwork.title}
+            artwork={artwork}
+            onSelect={onSelect}
+          />
+        ))}
       </div>
     </div>
   );
