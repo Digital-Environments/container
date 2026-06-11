@@ -87,6 +87,8 @@ export default function PointerDispersionThreeOnly({
   const motionModeRef = useRef<MotionMode>(motionMode)
   const [activeColours, setActiveColours] = useState<string[]>([nearColor, farColor])
   const activeColoursRef = useRef<string[]>(activeColours)
+  const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
+  const motionModeOptions: MotionMode[] = ["soft", "balanced", "intense"];
 
   const handleMotionModeChange = (mode: MotionMode): void => {
     setMotionMode(mode)
@@ -433,82 +435,106 @@ export default function PointerDispersionThreeOnly({
   }, [density])
 
   return (
-    <div style={{ position: 'relative', width: '100dvw', height: '100dvh' }}>
+    <div style={{ position: "relative", width: "100dvw", height: "100dvh" }}>
       <div
         ref={containerRef}
-        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', background: '#0C0404', overflow: 'hidden' }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "100%",
+          background: "#0C0404",
+          overflow: "hidden",
+        }}
       />
 
       <div
         style={{
-          position: 'absolute',
-          right: '1.5rem',
-          bottom: '1.5rem',
-          display: 'flex',
-          gap: '1rem',
-          alignItems: 'center',
-          color: 'rgba(255, 255, 255, 0.65)',
-          fontSize: '0.75rem',
-          textTransform: 'uppercase',
-          letterSpacing: '0.1em',
+          position: "absolute",
+          right: "1.5rem",
+          bottom: "1.5rem",
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center",
+          color: "rgba(255, 255, 255, 0.65)",
+          fontSize: "0.75rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.1em",
         }}
       >
         <div
           style={{
-            display: 'flex',
-            gap: '0.75rem',
-            alignItems: 'center',
+            display: "flex",
+            gap: "0.75rem",
+            alignItems: "center",
           }}
         >
-          <label htmlFor='motion-mode'>Motion</label>
+          <label htmlFor="motion-mode">Motion</label>
           <select
-            id='motion-mode'
+            id="motion-mode"
             value={motionMode}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleMotionModeChange(e.target.value as MotionMode)}
+            onMouseDown={() => setIsSelectOpen(true)}
+            onBlur={() => setIsSelectOpen(false)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              handleMotionModeChange(e.target.value as MotionMode);
+              setIsSelectOpen(false);
+            }}
             style={{
-              color: '#fff',
-              background: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.16)',
-              padding: '0.5rem 0.75rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
+              color: "#fff",
+              background: "rgba(255, 255, 255, 0.08)",
+              border: "1px solid rgba(255, 255, 255, 0.16)",
+              padding: "0.5rem 0.75rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
             }}
           >
-            <option value='soft'>Soft</option>
-            <option value='balanced'>Balanced</option>
-            <option value='intense'>Intense</option>
+            {motionModeOptions.map((mode: MotionMode) => (
+              <option
+                key={mode}
+                value={mode}
+                className="text-[#000] bg-[rgba(255,255,255,0.08)] border-[rgba(255,255,255,0.16)] border px-2 py-1 uppercase tracking-wider"
+                style={{
+                  color: isSelectOpen ? "#000" : "#fff",
+                }}
+              >
+                {mode}
+              </option>
+            ))}
           </select>
         </div>
 
         <div
           style={{
-            display: 'flex',
-            gap: '0.5rem',
-            alignItems: 'center',
+            display: "flex",
+            gap: "0.5rem",
+            alignItems: "center",
           }}
         >
           <span>Colours</span>
 
           {primaryColourOptions.map((option: ColourOption) => {
-            const isActive = activeColours.includes(option.color)
+            const isActive = activeColours.includes(option.color);
 
             return (
               <button
                 key={option.value}
                 onClick={() => handleColourToggle(option.color)}
                 style={{
-                  width: '1.75rem',
-                  height: '1.75rem',
-                  borderRadius: '999px',
-                  border: isActive ? '2px solid #fff' : '1px solid rgba(255, 255, 255, 0.2)',
+                  width: "1.75rem",
+                  height: "1.75rem",
+                  borderRadius: "999px",
+                  border: isActive
+                    ? "2px solid #fff"
+                    : "1px solid rgba(255, 255, 255, 0.2)",
                   background: option.color,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                   opacity: isActive ? 1 : 0.35,
                 }}
                 aria-label={option.label}
-                type='button'
+                type="button"
               />
-            )
+            );
           })}
         </div>
       </div>
@@ -517,24 +543,28 @@ export default function PointerDispersionThreeOnly({
         <button
           onClick={onBack}
           style={{
-            position: 'absolute',
-            top: '1.5rem',
-            left: '1.5rem',
-            color: 'rgba(255, 255, 255, 0.5)',
-            fontSize: '0.875rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            background: 'transparent',
-            border: 'none',
-            cursor: 'pointer',
-            transition: 'color 0.3s ease',
+            position: "absolute",
+            top: "1.5rem",
+            left: "1.5rem",
+            color: "rgba(255, 255, 255, 0.5)",
+            fontSize: "0.875rem",
+            textTransform: "uppercase",
+            letterSpacing: "0.1em",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            transition: "color 0.3s ease",
           }}
-          onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => (e.currentTarget.style.color = '#fff')}
-          onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)')}
+          onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) =>
+            (e.currentTarget.style.color = "#fff")
+          }
+          onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) =>
+            (e.currentTarget.style.color = "rgba(255, 255, 255, 0.5)")
+          }
         >
           ← Back
         </button>
       )}
     </div>
-  )
+  );
 }
