@@ -89,6 +89,7 @@ export default function PointerDispersionThreeOnly({
   const activeColoursRef = useRef<string[]>(activeColours)
   const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
   const motionModeOptions: MotionMode[] = ["soft", "balanced", "intense"];
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   const handleMotionModeChange = (mode: MotionMode): void => {
     setMotionMode(mode)
@@ -108,6 +109,17 @@ export default function PointerDispersionThreeOnly({
       return safeColours
     })
   }
+
+  const handleFullscreenToggle = async (): Promise<void> => {
+    if (!containerRef.current) return;
+
+    if (!document.fullscreenElement) {
+      await containerRef.current.requestFullscreen();
+      return;
+    }
+
+    await document.exitFullscreen();
+  };
 
   useEffect(() => {
     const el = containerRef.current
@@ -434,6 +446,18 @@ export default function PointerDispersionThreeOnly({
     }
   }, [density])
 
+  useEffect(() => {
+    const handleFullscreenChange = (): void => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
   return (
     <div style={{ position: "relative", width: "100dvw", height: "100dvh" }}>
       <div
@@ -537,6 +561,9 @@ export default function PointerDispersionThreeOnly({
             );
           })}
         </div>
+        <button className='cursor-pointer' onClick={handleFullscreenToggle} type="button">
+          {isFullscreen ? "Exit Fullscreen" : "[Fullscreen]"}
+        </button>
       </div>
 
       {onBack && (
